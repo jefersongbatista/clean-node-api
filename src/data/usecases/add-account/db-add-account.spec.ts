@@ -5,7 +5,7 @@ const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt (value: string): Promise<string> {
       // eslint-disable-next-line @typescript-eslint/return-await
-      return new Promise(resolve => resolve('hashad_password'))
+      return new Promise(resolve => resolve('hashed_password'))
     }
   }
   return new EncrypterStub()
@@ -80,7 +80,7 @@ describe('DbAddAccount usecase', () => {
     expect(addSpy).toHaveBeenCalledWith({
       name: 'valid_name',
       email: 'valid_email',
-      password: 'hashad_password'
+      password: 'hashed_password'
     })
   })
 
@@ -94,5 +94,21 @@ describe('DbAddAccount usecase', () => {
     }
     const promise = sut.add(accountData)
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return an account on success', async () => {
+    const { sut } = makeSut()
+    const accountData = {
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'valid_password'
+    }
+    const account = await sut.add(accountData)
+    expect(account).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      email: 'valid_email',
+      password: 'hashed_password'
+    })
   })
 })
