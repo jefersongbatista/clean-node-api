@@ -6,6 +6,7 @@
     "rules": {
         "@typescript-eslint/strict-boolean-expressions": 0,
         "promise/param-names": 0,
-        "@typescript-eslint/return-await": 0
+        "@typescript-eslint/return-await": 0,
+        "@typescript-eslint/method-signature-style": 0
       }
 }
